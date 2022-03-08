@@ -3,18 +3,39 @@ from evinv import evinv
 
 def main():
     years = 10
-#    Hs_yrmax = [1.01, 1.02, 1.03, 1.04, 1.05, 1.06, 1.07, 1.08, 1.09]
-    Hs_yrmax = [0.1576,
-    0.9706,
-    0.9572,
-    0.4854,
-    0.8003,
-    0.1419,
-    0.4218,
-    0.9157,
-    0.7922,
-    0.9595]
-    R = 5 #this is the "next years"  Return year
+    Hs_yrmax = [
+    16,
+    15,
+    17,
+    19,
+    16,
+    15,
+    17,
+    15,
+    17,
+    15,
+    19,
+    17,
+    18,
+    18,
+    18,
+    19,
+    16,
+    15,
+    18,
+    16,
+    20,
+    16,
+    19,
+    16,
+    17,
+    18,
+    20,
+    16,
+    20,
+    19]
+
+    R = 10 #this is the "next years"  Return year
     pex = 1/R #probability of each event
 
     inverse_hs_yrmax = [element * -1 for element in Hs_yrmax]
