@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+
+"""main.py: This program is a conversion from matlab.
+    its goal is to take in some waveform data, and output
+    the inverse cumulative distribution function"""
+
+"""What this does is basically take in x amount of years data.
+Then it finds what the max wave height will be during the next n years"""
 from evfit import evfit
 from evinv import evinv
 

@@ -16,7 +16,8 @@ def evfit(x, alpha = 0.05, censoring=0, freq=0, options=0):
     if censoring==0:
         censoring = np.zeros(len(x) )
     else: #todo, if censoring not empty and len(x) and len(censoring not same size throw error)
-        pass
+        print('stats:evfit:XCensSizeMismatch')
+        return 0
     if freq==0:
         freq = np.ones(len(x))
     else:
@@ -36,11 +37,9 @@ def evfit(x, alpha = 0.05, censoring=0, freq=0, options=0):
     ncensored = temp
     if not temp==0:
         ncensored =  sum(freq.dot(censoring))
-        #todo, i am having an error here because freq.dot(censoring) results in 0, you cant sum 0
     nuncensored = n - ncensored
     #get range between high and low
     rangex = max(x) - min(x)
-   # rangex = range(x);
     maxx = max(x)
 
     if (n==0) and (nuncensored==0) and (np.isfinite(rangex)):
@@ -60,13 +59,20 @@ def evfit(x, alpha = 0.05, censoring=0, freq=0, options=0):
     #Shift x to max(x) == 0, min(x) = -1 to make likelihood eqn more stable.
     test = [i - maxx for i in x]
     x0 = np.array(test) / np.array(rangex)
-
+    #% First, get a rough estimate for the scale parameter sigma as a starting value.
+    # Use MM when there is no censoring
     if ncensored==0:
         sigmahat = (np.sqrt(6)*np.std(x0))/np.pi
         wgtmeanUnc = sum(np.array(freq)*np.array((x0))) / n
-
+    # Bracket the root of the scale parameter likelihood eqn ...
     if (lkeqn(sigmahat, x0, freq, wgtmeanUnc) > 0):
-        pass
+        upper = sigmahat
+        lower = 0.5 * upper
+        while (lkeqn(lower, x0, freq, wgtmeanUnc)>0):
+            upper = lower
+            lower = 0.5 * upper
+            if lower <x
+
     else:
         lower = sigmahat
         upper = 2*lower
@@ -79,7 +85,6 @@ def evfit(x, alpha = 0.05, censoring=0, freq=0, options=0):
 
     bnds = [lower, upper]
     sigmahat = fsolve(lkeqn,bnds[0], args=( x0, freq, wgtmeanUnc))
-    #todo, this is where i see if there are any errors
     x = freq.dot(np.exp(np.array(x0) / sigmahat))
 
     muhat = sigmahat.dot(np.log(x / nuncensored));
