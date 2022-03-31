@@ -6,9 +6,7 @@
 
 """What this does is basically take in x amount of years data.
 Then it finds what the max wave height will be during the next n years"""
-from evfit import evfit
-from evinv import evinv
-import test
+import extreme
 
 def main():
     years = 10
@@ -47,9 +45,9 @@ def main():
     R = 10 #this is the "next years"  Return year
     pex = 1/R #probability of each event
 
-    ste_gum,cdf = test.ste_block_maxima_Gumbel_with_evinv(Hs_yrmax,pex)
+    ste_gum,cdf = extreme.ste_block_maxima_Gumbel_with_evinv(Hs_yrmax,pex)
     print(ste_gum.kwds,cdf)
-    helloasdf = test.evinv(pex, ste_gum.kwds['loc'], ste_gum.kwds['scale'])
+    helloasdf = extreme.evinv(pex, ste_gum.kwds['loc'], ste_gum.kwds['scale'])
     print(ste_gum.kwds, helloasdf)
 
 
