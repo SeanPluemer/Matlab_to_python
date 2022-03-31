@@ -71,7 +71,7 @@ def evfit(x, alpha = 0.05, censoring=0, freq=0, options=0):
         while (lkeqn(lower, x0, freq, wgtmeanUnc)>0):
             upper = lower
             lower = 0.5 * upper
-            if lower <x
+            #if lower <x
 
     else:
         lower = sigmahat

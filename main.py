@@ -8,6 +8,7 @@
 Then it finds what the max wave height will be during the next n years"""
 from evfit import evfit
 from evinv import evinv
+import test
 
 def main():
     years = 10
@@ -46,19 +47,11 @@ def main():
     R = 10 #this is the "next years"  Return year
     pex = 1/R #probability of each event
 
-    inverse_hs_yrmax = [element * -1 for element in Hs_yrmax]
-    Hs_param = evfit(inverse_hs_yrmax)
-    '''takes in max height and returns location parameter and scale
-    returns maximum likelihood estimates of the parameters of the type 1 extreme value distribution given the sample data in data. 
-    The sample data data must be a double-precision vector. 
-    parmhat(1) is the location parameter µ, and parmhat(2) is the scale parameter σ.'''
+    ste_gum,cdf = test.ste_block_maxima_Gumbel_with_evinv(Hs_yrmax,pex)
+    print(ste_gum.kwds,cdf)
+    helloasdf = test.evinv(pex, ste_gum.kwds['loc'], ste_gum.kwds['scale'])
+    print(ste_gum.kwds, helloasdf)
 
-    print(Hs_param)
-    Hs_r = evinv(pex, Hs_param[0], Hs_param[1]) * -1
-    '''
-    takes in splits, location, and scale, returns the inverse cumulation function
-    %nverse cumulative distribution function'''
-    print(Hs_r)
 
 
 if __name__ == "__main__":
