@@ -11,7 +11,7 @@ import extreme
 def main():
     years = 10
     Hs_yrmax = [
-    16,
+    0,
     15,
     17,
     19,
@@ -44,9 +44,12 @@ def main():
 
     R = 10 #this is the "next years"  Return year
     pex = 1/R #probability of each event
+    n_year = [1.01,5,10]
 
-    ste_gum,cdf = extreme.ste_block_maxima_Gumbel_with_evinv(Hs_yrmax,pex)
+    ste_gum,cdf = extreme.annual_maxima(Hs_yrmax, 1.01 )
     print(ste_gum.kwds,cdf)
+
+
     helloasdf = extreme.evinv(pex, ste_gum.kwds['loc'], ste_gum.kwds['scale'])
     print(ste_gum.kwds, helloasdf)
 

@@ -348,6 +348,35 @@ def ste_block_maxima_Gumbel_with_evinv(block_maxima,pex=0):
     else:
         return ste
 
+def annual_maxima(yearly_maxima,n_year=0):
+    """ Fits the yearly_maxima to a Gumbel distribution and return extreme value with n_year return period
+
+    Parameters
+    ----------
+    yearly_maxima: np.array
+        yearly_maxima (i.e., largest peak in each year).
+    n_year: np.array
+        n-year return period
+
+    Returns
+    -------
+    ste: scipy.stats.rv_frozen, CDF
+            Gumbel distribution.
+            Inverse of the extreme value cumulative distribution function (i.e., extreme value with n_year return period)
+    """
+    ste_params = stats.gumbel_r.fit(yearly_maxima)
+    param_names = ['loc', 'scale']
+    ste_params = {k: v for k, v in zip(param_names, ste_params)}
+    ste = stats.gumbel_r(**ste_params)
+    ste.params = ste_params
+
+    if(not n_year==0):
+        q =   np.log(-1 * np.log(1 - 1 / n_year))
+        cdf = -1* (np.multiply(ste_params['scale'], q) + (-1 * ste_params['loc']))
+        return ste, cdf
+    else:
+        return ste
+
 def evinv(p,mu,sigma):
     """ returns the inverse cdf for a type 1 extreme value distribution with
     location parameter MU and scale parameter SIGMA, evaluated at the values in P.
